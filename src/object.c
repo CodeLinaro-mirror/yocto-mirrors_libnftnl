@@ -55,6 +55,10 @@ void nftnl_obj_free(const struct nftnl_obj *obj)
 		xfree(obj->name);
 	if (obj->flags & (1 << NFTNL_OBJ_USERDATA))
 		xfree(obj->user.data);
+	if (obj->flags & (1 << NFTNL_OBJ_TUNNEL_OPTS)) {
+		nftnl_tunnel_opts_free(obj->data.tunnel.tun_opts);
+		xfree(obj->data.tunnel.tun_opts);
+	}
 
 	xfree(obj);
 }
